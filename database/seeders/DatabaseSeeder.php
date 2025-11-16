@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DatosEscolaresSeeder::class);
         $this->call(ProcesoSeeder::class);
         $this->call(DomicilioSeeder::class);
+        $this->call(ArchivoSeeder::class);
         $this->call(UsuarioSeeder::class);
     }
 }

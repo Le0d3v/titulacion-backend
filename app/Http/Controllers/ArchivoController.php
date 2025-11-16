@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ReferenciaRequest;
 use App\Models\Archivo;
+use App\Models\Proceso;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ArchivoController extends Controller
@@ -18,9 +21,23 @@ class ArchivoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function referenciaStore(ReferenciaRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $proceso = Proceso::find($data["id"]);
+        $archivo = Archivo::find($data["id"]);
+
+        $archivo->referencia_pago = $data["referencia_pago"];
+        $proceso->pago_titulo = 2;
+
+        $archivo->save();
+        $proceso->save();
+
+        return [
+            "status" => 200,
+            "message" => "Referencia Registrada"
+        ];
     }
 
     /**

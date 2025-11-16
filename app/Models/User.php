@@ -58,4 +58,8 @@ class User extends Authenticatable
     public function datos_escolares() {
         return $this->belongsTo(DatosEscolares::class);
     }
+
+    public function archivo() {
+        return $this->belongsTo(Archivo::class);
+    }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\IngController;
 use App\Http\Controllers\TsuController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ArchivoController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\PasswordController;
 
@@ -17,6 +18,7 @@ Route::middleware("auth:sanctum")->group(function() {
 
     Route::post("/logout", [AuthController::class, "logout"]);
     Route::post("/change-password", [PasswordController::class, "update"]);
+    Route::post("/archivo/referencia/store", [ArchivoController::class, "referenciaStore"]);
     
 });
 

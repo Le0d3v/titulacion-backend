@@ -73,20 +73,23 @@ class UsuarioSeeder extends Seeder
         $matriculasExistentes = [];
 
         function generarMatricula(&$matriculasExistentes) {
-            $matricula = "35";
-            $matricula .= rand(21, 23);
-            
+            // Prefijo fijo + random entre 22 y 21 + "11"
+            $matricula = "35" . rand(22, 21) . "11";
+
             do {
+                // Genera 4 dígitos aleatorios
                 $matriculaGenerada = $matricula;
-                for ($i = 0; $i < 5; $i++) {
+                for ($i = 0; $i < 4; $i++) {
                     $matriculaGenerada .= rand(0, 9);
                 }
-            } while (in_array($matriculaGenerada, $matriculasExistentes)); 
+            } while (in_array($matriculaGenerada, $matriculasExistentes));
 
+            // Guardar para evitar duplicados
             $matriculasExistentes[] = $matriculaGenerada;
 
             return $matriculaGenerada;
         }
+
 
         function quitarAcentos($texto) {
             $acentos = ['á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú'];
@@ -184,6 +187,7 @@ class UsuarioSeeder extends Seeder
                 "domicilio_id" => $i,
                 "datos_escolares_id" => $i,
                 "proceso_id" => $i,
+                "archivo_id" => $i,
                 "admin" => 0
             ];
         }

@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('archivos', function (Blueprint $table) {
             $table->id();
-            $table->string("memoria_estadia");
-            $table->string("imagen_titulacion");
-            $table->string("comrpobante_donacion");
-            $table->string("referencia_pago");
+            $table->string("memoria_estadia")->nullable();
+            $table->string("imagen_titulacion")->nullable();
+            $table->string("comprobante_donacion")->nullable();
+            $table->string("referencia_pago")->nullable();
             $table->timestamps();
         });
     }

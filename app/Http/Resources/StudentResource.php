@@ -59,6 +59,13 @@ class StudentResource extends JsonResource
                 "pago_titulo" => $this->proceso->pago_titulo,
                 "completado" => $this->proceso->completado,
             ],
+
+            "archivo" => [
+                "memoria_estadia" => $this->archivo->memoria_estadia,
+                "imagen_titulacion" => $this->archivo->imagen_titulacion,
+                "comprobante_donacion" => $this->archivo->comprobante_donacion,
+                "referencia_pago" => $this->archivo->referencia_pago,
+            ]
         ];
     }
 }
