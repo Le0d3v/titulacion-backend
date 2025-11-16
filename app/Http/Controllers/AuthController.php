@@ -22,11 +22,14 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
+
+        if($user->proceso != null) {
+            return [
+                "token" => $user->createToken("token")->plainTextToken,
+                "user" => $user, 
+            ];
+        }
         
-        return [
-            "token" => $user->createToken("token")->plainTextToken,
-            "user" => $user
-        ];
     }
 
     public function logout(Request $request) {

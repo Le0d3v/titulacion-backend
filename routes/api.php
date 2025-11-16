@@ -17,7 +17,7 @@ Route::middleware("auth:sanctum")->group(function() {
 
     Route::post("/logout", [AuthController::class, "logout"]);
     Route::post("/change-password", [PasswordController::class, "update"]);
-
+    
 });
 
 Route::apiResource("/students/tsu", TsuController::class);
@@ -25,7 +25,6 @@ Route::apiResource("/students/ing", IngController::class);
 Route::apiResource("/students/all",StudentController::class);
 
 // Autenticación 
-Route::post("/login", [AuthController::class, "login"]);
 Route::post("/login", [AuthController::class, "login"]);
 
 Route::apiResource("/admins", AdminController::class);
