@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImagenRequest;
 use App\Models\User;
 use App\Models\Archivo;
 use App\Models\Proceso;
@@ -68,14 +69,12 @@ class ArchivoController extends Controller
     }
 
     public function comprobanteStore(PDFRequest $request) {
-
         $data = $request->validated();
 
         $proceso = Proceso::find($data["id"]);
         $archivo = Archivo::find($data["id"]);
 
         $nombreArchivo = Str::random(40) . '.pdf';
-
         $path = $request->file('pdf')->storeAs('pdfs/comprobantes/', $nombreArchivo, 'public');
 
         $proceso->pago_donacion = 2;
@@ -87,6 +86,27 @@ class ArchivoController extends Controller
         return [
             "status" => 200,
             "message" => "Archivo Registrado"
+        ];
+    }
+
+    public function imagenStore(ImagenRequest $request) {
+        $data = $request->validated();
+
+        $proceso = Proceso::find($data["id"]);
+        $archivo = Archivo::find($data["id"]);
+
+        $nombre = Str::random(40) . '.' . $request->file('imagen')->getClientOriginalExtension();
+        $path = $request->file('imagen')->storeAs('imagenes/', $nombre, 'public');
+
+        $proceso->carga_imagen = 2;
+        $archivo->imagen_titulacion = $nombre;
+
+        $proceso->save();
+        $archivo->save();
+
+        return [
+            "status" => 200,
+            "message" => "Imágen Registrada"
         ];
     }
 
