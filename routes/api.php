@@ -24,6 +24,8 @@ Route::middleware("auth:sanctum")->group(function() {
     Route::post("/archivo/memoria/store", [ArchivoController::class, "memoriaStore"]);
     Route::post("/archivo/comprobante/store", [ArchivoController::class, "comprobanteStore"]); 
     Route::post("/archivo/imagen/store", [ArchivoController::class, "imagenStore"]); 
+
+    
 });
 
 Route::apiResource("/students/tsu", TsuController::class);
