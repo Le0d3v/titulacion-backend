@@ -22,6 +22,9 @@ Route::middleware("auth:sanctum")->group(function() {
     Route::post("/change-password", [PasswordController::class, "update"]);
     Route::post("/archivo/referencia/store", [ArchivoController::class, "referenciaStore"]);
     Route::post("/archivo/memoria/store", [ArchivoController::class, "memoriaStore"]);
+    Route::post("/archivo/memoria/destroy/{id}", [ArchivoController::class, "memoriaDestroy"]);
+    Route::post("/archivo/comprobante/destroy/{id}", [ArchivoController::class, "comprobanteDestroy"]);
+    Route::post("/archivo/imagen/destroy/{id}", [ArchivoController::class, "imagenDestroy"]);
     Route::post("/archivo/comprobante/store", [ArchivoController::class, "comprobanteStore"]); 
     Route::post("/archivo/imagen/store", [ArchivoController::class, "imagenStore"]); 
 
@@ -34,5 +37,4 @@ Route::apiResource("/students/all",StudentController::class);
 
 // Autenticación 
 Route::post("/login", [AuthController::class, "login"]);
-
 Route::apiResource("/admins", AdminController::class);

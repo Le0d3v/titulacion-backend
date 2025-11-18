@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class StudentResource extends JsonResource
 {
@@ -60,12 +61,13 @@ class StudentResource extends JsonResource
                 "completado" => $this->proceso->completado,
             ],
 
-            "archivo" => [
-                "memoria_estadia" => $this->archivo->memoria_estadia,
-                "imagen_titulacion" => $this->archivo->imagen_titulacion,
-                "comprobante_donacion" => $this->archivo->comprobante_donacion,
+           "archivo" => [
+                "memoria_estadia" => Storage::url("pdfs/memorias/" . $this->archivo->memoria_estadia),
+                "imagen_titulacion" => Storage::url("imagenes/titulacion/" . $this->archivo->imagen_titulacion),
+                "comprobante_donacion" => Storage::url("pdfs/comprobantes/" . $this->archivo->comprobante_donacion),
                 "referencia_pago" => $this->archivo->referencia_pago,
             ]
+
         ];
     }
 }
