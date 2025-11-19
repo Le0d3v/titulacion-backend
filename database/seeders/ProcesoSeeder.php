@@ -13,17 +13,32 @@ class ProcesoSeeder extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-    {
-        $estados = [0, 1, 2, 3];
-        
-        for($i = 1; $i < 723; $i++) {
+    {        
+        for($i = 1; $i < 5; $i++) {
             $data = [];
-            $data["validacion_memoria_estadia"] = array_rand($estados);
-            $data["validacion_datos_personales"] = array_rand($estados);
-            $data["encuesta_egresados"] = array_rand($estados);
-            $data["carga_imagen"] = array_rand($estados);
-            $data["pago_donacion"] = array_rand($estados);
-            $data["pago_titulo"] = array_rand($estados);
+            $data["id"] = $i;
+            $data["validacion_memoria_estadia"] = null;
+            $data["validacion_datos_personales"] = null;
+            $data["encuesta_egresados"] = null;
+            $data["carga_imagen"] = null;
+            $data["pago_donacion"] = null;
+            $data["pago_titulo"] = null;
+            $data["completado"] = null;
+            $data["created_at"] = Carbon::now();
+            $data["updated_at"] = Carbon::now();
+
+            DB::table("procesos")->insert($data);
+        }
+
+        for($i = 5; $i < 729; $i++) {
+            $data = [];
+            $data["id"] = $i;
+            $data["validacion_memoria_estadia"] = 0;
+            $data["validacion_datos_personales"] = 0;
+            $data["encuesta_egresados"] = 0;
+            $data["carga_imagen"] = 0;
+            $data["pago_donacion"] = 0;
+            $data["pago_titulo"] = 0;
             $data["completado"] = 0;
             $data["created_at"] = Carbon::now();
             $data["updated_at"] = Carbon::now();

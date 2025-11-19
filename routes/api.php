@@ -34,7 +34,7 @@ Route::middleware("auth:sanctum")->group(function() {
 Route::apiResource("/students/tsu", TsuController::class);
 Route::apiResource("/students/ing", IngController::class);
 Route::apiResource("/students/all",StudentController::class);
+Route::apiResource("/admins", AdminController::class);
 
 // Autenticación 
 Route::post("/login", [AuthController::class, "login"]);
-Route::apiResource("/admins", AdminController::class);

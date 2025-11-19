@@ -50,12 +50,24 @@ class ArchivoController extends Controller
 
         $data = $request->validated();
 
-        $proceso = Proceso::find($data["id"]);
-        $archivo = Archivo::find($data["id"]);
+        $proceso = Proceso::findOrFail($data["id"]);
+        $archivo = Archivo::findOrFail($data["id"]);
+        $user = User::findOrFail($data["id"]);
 
-        $nombreArchivo = Str::random(40) . '.pdf';
+        $nombreArchivo = "memoria_estadia_{$user->matricula}.pdf";
+        $rutaFisica = public_path("storage/pdfs/memorias");
 
-        $path = $request->file('pdf')->storeAs('pdfs/memorias/', $nombreArchivo, 'public');
+        if (!file_exists($rutaFisica)) {
+            mkdir($rutaFisica, 0775, true);
+        }
+
+        $rutaArchivo = $rutaFisica . "/" . $nombreArchivo;
+
+        if (file_exists($rutaArchivo)) {
+            unlink($rutaArchivo);
+        }
+
+        $request->file("pdf")->move($rutaFisica, $nombreArchivo);
 
         $proceso->validacion_memoria_estadia = 2;
         $archivo->memoria_estadia = $nombreArchivo;
@@ -65,18 +77,32 @@ class ArchivoController extends Controller
 
         return [
             "status" => 200,
-            "message" => "Archivo Registrado"
+            "message" => "Archivo registrado correctamente"
         ];
+
     }
 
     public function comprobanteStore(PDFRequest $request) {
-        $data = $request->validated();
+       $data = $request->validated();
 
-        $proceso = Proceso::find($data["id"]);
-        $archivo = Archivo::find($data["id"]);
+        $proceso = Proceso::findOrFail($data["id"]);
+        $archivo = Archivo::findOrFail($data["id"]);
+        $user = User::findOrFail($data["id"]);
 
-        $nombreArchivo = Str::random(40) . '.pdf';
-        $path = $request->file('pdf')->storeAs('pdfs/comprobantes/', $nombreArchivo, 'public');
+        $nombreArchivo = "comprobante_{$user->matricula}.pdf";
+        $rutaFisica = public_path("storage/pdfs/comprobantes");
+
+        if (!file_exists($rutaFisica)) {
+            mkdir($rutaFisica, 0775, true);
+        }
+
+        $rutaArchivo = $rutaFisica . "/" . $nombreArchivo;
+
+        if (file_exists($rutaArchivo)) {
+            unlink($rutaArchivo);
+        }
+
+        $request->file("pdf")->move($rutaFisica, $nombreArchivo);
 
         $proceso->pago_donacion = 2;
         $archivo->comprobante_donacion = $nombreArchivo;
@@ -86,29 +112,45 @@ class ArchivoController extends Controller
 
         return [
             "status" => 200,
-            "message" => "Archivo Registrado"
+            "message" => "Archivo registrado correctamente"
         ];
     }
 
     public function imagenStore(ImagenRequest $request) {
         $data = $request->validated();
 
-        $proceso = Proceso::find($data["id"]);
-        $archivo = Archivo::find($data["id"]);
+        $proceso = Proceso::findOrFail($data["id"]);
+        $archivo = Archivo::findOrFail($data["id"]);
+        $user = User::findOrFail($data["id"]);
 
-        $nombre = Str::random(40) . '.' . $request->file('imagen')->getClientOriginalExtension();
-        $path = $request->file('imagen')->storeAs('imagenes/', $nombre, 'public');
+        $extension = $request->file("imagen")->getClientOriginalExtension();
+        $nombreArchivo = "imagen_{$user->matricula}.{$extension}";
+
+        $rutaFisica = public_path("storage/imagenes");
+
+        if (!file_exists($rutaFisica)) {
+            mkdir($rutaFisica, 0775, true);
+        }
+
+        $rutaArchivo = $rutaFisica . "/" . $nombreArchivo;
+
+        if (file_exists($rutaArchivo)) {
+            unlink($rutaArchivo);
+        }
+
+        $request->file("imagen")->move($rutaFisica, $nombreArchivo);
 
         $proceso->carga_imagen = 2;
-        $archivo->imagen_titulacion = $nombre;
+        $archivo->imagen_titulacion = $nombreArchivo;
 
         $proceso->save();
         $archivo->save();
 
         return [
             "status" => 200,
-            "message" => "Imágen Registrada"
+            "message" => "Archivo registrado correctamente"
         ];
+
     }
 
     public function memoriaDestroy($id) {

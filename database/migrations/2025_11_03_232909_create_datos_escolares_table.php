@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('datos_escolares', function (Blueprint $table) {
             $table->id();
-            $table->string("carrera");
-            $table->string("especialidad");
-            $table->integer("cuatrimestre");
-            $table->string(column: "turno");
-            $table->string(column: "grupo");
+            $table->string("carrera")->nullable();
+            $table->string("especialidad")->nullable();
+            $table->integer("cuatrimestre")->nullable();
+            $table->string(column: "turno")->nullable();
+            $table->string(column: "grupo")->nullable();
             $table->timestamps();
         });
     }

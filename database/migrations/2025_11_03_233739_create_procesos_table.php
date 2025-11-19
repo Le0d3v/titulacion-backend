@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('procesos', function (Blueprint $table) {
             $table->id();
-            $table->boolean("validacion_memoria_estadia");
-            $table->boolean("validacion_datos_personales");
-            $table->boolean("encuesta_egresados");
-            $table->boolean("carga_imagen");
-            $table->boolean("pago_donacion");
-            $table->boolean("pago_titulo");
-            $table->boolean("completado")->default(0);
+            $table->boolean("validacion_memoria_estadia")->nullable();
+            $table->boolean("validacion_datos_personales")->nullable();
+            $table->boolean("encuesta_egresados")->nullable();
+            $table->boolean("carga_imagen")->nullable();
+            $table->boolean("pago_donacion")->nullable();
+            $table->boolean("pago_titulo")->nullable();
+            $table->boolean("completado")->default(0)->nullable();
             $table->timestamps();
         });
     }

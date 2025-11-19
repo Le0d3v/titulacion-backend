@@ -43,9 +43,22 @@ class DatosEscolaresSeeder extends Seeder
             "11" => ["11A", "11B", "11C"]
         ];
 
-        for ($i = 1; $i < 723; $i++) {
-            $data = [];
+        for ($i = 1; $i < 5; $i++) {
+            $data["id"] = $i;
+            $data["carrera"] = null;
+            $data["especialidad"] = null;
+            $data["cuatrimestre"] = null;
+            $data["turno"] = null;
+            $data["grupo"] = null;
+            $data["created_at"] = Carbon::now();
+            $data["updated_at"] = Carbon::now();
 
+            DB::table('datos_escolares')->insert($data);
+        }
+
+        for ($i = 5; $i < 729; $i++) {
+            $data = [];
+            $data["id"] = $i;
             $data["carrera"] = $carreras[array_rand($carreras)];
 
             switch ($data["carrera"]) {

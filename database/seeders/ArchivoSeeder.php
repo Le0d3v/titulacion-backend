@@ -14,8 +14,9 @@ class ArchivoSeeder extends Seeder
      */
     public function run(): void
     {
-        for($i = 1; $i < 723; $i++) {
+        for($i = 1; $i < 729; $i++) {
             $data = [];
+            $data["id"] = $i;
             $data["memoria_estadia"] = null;
             $data["imagen_titulacion"] = null;
             $data["comprobante_donacion"] = null;

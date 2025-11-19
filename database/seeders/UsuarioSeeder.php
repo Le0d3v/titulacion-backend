@@ -155,8 +155,44 @@ class UsuarioSeeder extends Seeder
 
             return $matricula;
         }
+
+        for ($i = 1; $i < 5; $i++) {
+            $nombre = $nombres[array_rand($nombres)];
+            $apellidoPaterno = $apellidos[array_rand($apellidos)];
+            $apellidoMaterno = $apellidos[array_rand($apellidos)];
+            $fechaNacimiento = fake()->date();
+            $genero = $generos[array_rand($generos)];
+            $curp = generarCURP($nombre, $apellidoPaterno, $apellidoMaterno, $fechaNacimiento, $genero);
+            $rfc = generarRFC($curp);
+            $matricula = generarMatricula($matriculasExistentes);
+            $email = crearEmail($matricula);
+
+            $admins[] = [
+                "name" => $nombre,
+                "email" => $email,
+                "password" => Hash::make("12345678"),
+                "created_at" => Carbon::now(),
+                "updated_at" => Carbon::now(),
+                "apellido_paterno" => $apellidoPaterno,
+                "apellido_materno" => $apellidoMaterno,
+                "fecha_nacimiento" => $fechaNacimiento,
+                "matricula" => $matricula,
+                "curp" => $curp,
+                "rfc" => $rfc,
+                "telefono" => fake("es-MX")->unique()->phoneNumber(),
+                "genero" => $genero,
+                "estado_civil" => $estados_civiles[array_rand($estados_civiles)],
+                "telefono_emergencia_1" => fake("es-MX")->unique()->phoneNumber(),
+                "telefono_emergencia_2" => fake("es-MX")->unique()->phoneNumber(),
+                "domicilio_id" => $i,
+                "datos_escolares_id" => $i,
+                "proceso_id" => $i,
+                "archivo_id" => $i,
+                "admin" => 1
+            ];
+        }
         
-        for ($i = 1; $i < 723; $i++) {
+        for ($i = 5; $i < 729; $i++) {
             $nombre = $nombres[array_rand($nombres)];
             $apellidoPaterno = $apellidos[array_rand($apellidos)];
             $apellidoMaterno = $apellidos[array_rand($apellidos)];
@@ -192,42 +228,7 @@ class UsuarioSeeder extends Seeder
             ];
         }
 
-        for ($i = 723; $i < 729; $i++) {
-            $nombre = $nombres[array_rand($nombres)];
-            $apellidoPaterno = $apellidos[array_rand($apellidos)];
-            $apellidoMaterno = $apellidos[array_rand($apellidos)];
-            $fechaNacimiento = fake()->date();
-            $genero = $generos[array_rand($generos)];
-            $curp = generarCURP($nombre, $apellidoPaterno, $apellidoMaterno, $fechaNacimiento, $genero);
-            $rfc = generarRFC($curp);
-            $matricula = generarMatricula($matriculasExistentes);
-            $email = crearEmail($matricula);
-
-            $admins[] = [
-                "name" => $nombre,
-                "email" => $email,
-                "password" => Hash::make("12345678"),
-                "created_at" => Carbon::now(),
-                "updated_at" => Carbon::now(),
-                "apellido_paterno" => $apellidoPaterno,
-                "apellido_materno" => $apellidoMaterno,
-                "fecha_nacimiento" => $fechaNacimiento,
-                "matricula" => $matricula,
-                "curp" => $curp,
-                "rfc" => $rfc,
-                "telefono" => fake("es-MX")->unique()->phoneNumber(),
-                "genero" => $genero,
-                "estado_civil" => $estados_civiles[array_rand($estados_civiles)],
-                "telefono_emergencia_1" => fake("es-MX")->unique()->phoneNumber(),
-                "telefono_emergencia_2" => fake("es-MX")->unique()->phoneNumber(),
-                "domicilio_id" => $i,
-                "datos_escolares_id" => null,
-                "proceso_id" => null,
-                "admin" => 1
-            ];
-        }
-
-        DB::table("users")->insert($estudiantes);
         DB::table("users")->insert($admins);
+        DB::table("users")->insert($estudiantes);
     }
 }

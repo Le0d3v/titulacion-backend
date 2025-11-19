@@ -391,22 +391,7 @@ class DomicilioSeeder extends Seeder
         $domiciliosEstudiantes = [];
         $domiciliosAdmins = [];
 
-        for ($i = 1; $i < 723; $i++) {
-            $domiciliosEstudiantes[] = [
-               "calle" => $calles[array_rand($calles)],
-               "numero_exterior" => rand(1, 100),
-               "numero_interior" => rand(1, 100),   
-               "colonia" => $colonias[array_rand($colonias)],
-               "municipio" => $municipios[array_rand($municipios)],
-               "estado" => $estados[array_rand($estados)],
-               "codigo_postal" => $codigos_postales[array_rand($codigos_postales)],
-               "pais" => "México",
-               "created_at" => Carbon::now(),
-               "updated_at" => Carbon::now(),
-            ];
-        }
-
-        for ($i = 723; $i < 729; $i++) {
+        for ($i = 1; $i < 5; $i++) {
             $domiciliosAdmins[] = [
                "calle" => $calles[array_rand($calles)],
                "numero_exterior" => rand(1, 100),
@@ -421,8 +406,22 @@ class DomicilioSeeder extends Seeder
             ];
         }
 
+        for ($i = 5; $i < 729; $i++) {
+            $domiciliosEstudiantes[] = [
+               "calle" => $calles[array_rand($calles)],
+               "numero_exterior" => rand(1, 100),
+               "numero_interior" => rand(1, 100),   
+               "colonia" => $colonias[array_rand($colonias)],
+               "municipio" => $municipios[array_rand($municipios)],
+               "estado" => $estados[array_rand($estados)],
+               "codigo_postal" => $codigos_postales[array_rand($codigos_postales)],
+               "pais" => "México",
+               "created_at" => Carbon::now(),
+               "updated_at" => Carbon::now(),
+            ];
+        }
 
-        DB::table('domicilios')->insert($domiciliosEstudiantes);
         DB::table('domicilios')->insert($domiciliosAdmins);
+        DB::table('domicilios')->insert($domiciliosEstudiantes);
     }
 }
