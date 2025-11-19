@@ -159,7 +159,7 @@ class ArchivoController extends Controller
         $archivo = Archivo::find($id);
         $proceso = Proceso::find($id);
 
-        $ruta = public_path('pdfs/memorias/' . $archivo->memoria_estadia);
+        $ruta = public_path('storage/pdfs/memorias/' . $archivo->memoria_estadia);
 
         if (file_exists($ruta)) {
             unlink($ruta);
@@ -181,7 +181,7 @@ class ArchivoController extends Controller
         $archivo = Archivo::find($id);
         $proceso = Proceso::find($id);
 
-        $ruta = public_path('pdfs/comprobantes/' . $archivo->comprobante_donacion);
+        $ruta = public_path('storage/pdfs/comprobantes/' . $archivo->comprobante_donacion);
 
         if (file_exists($ruta)) {
             unlink($ruta);
@@ -203,7 +203,7 @@ class ArchivoController extends Controller
         $archivo = Archivo::find($id);
         $proceso = Proceso::find($id);
 
-        $ruta = public_path('imagenes/' . $archivo->imagen_titulacion);
+        $ruta = public_path('storage/imagenes/' . $archivo->imagen_titulacion);
 
         if (file_exists($ruta)) {
             unlink($ruta);
