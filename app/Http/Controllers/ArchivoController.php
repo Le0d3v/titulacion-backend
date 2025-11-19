@@ -143,6 +143,8 @@ class ArchivoController extends Controller
         $proceso->carga_imagen = 2;
         $archivo->imagen_titulacion = $nombreArchivo;
 
+        $a = 0;
+
         $proceso->save();
         $archivo->save();
 
