@@ -158,23 +158,38 @@ class ArchivoController extends Controller
     public function memoriaDestroy($id) {
         $archivo = Archivo::find($id);
         $proceso = Proceso::find($id);
-        Storage::delete('/pdfs/memorias/' . $archivo->memoria_estadia);
+
+        $ruta = public_path('pdfs/memorias/' . $archivo->memoria_estadia);
+
+        if (file_exists($ruta)) {
+            unlink($ruta);
+        }
+
         $archivo->memoria_estadia = null;
         $proceso->validacion_memoria_estadia = 0;
+
         $archivo->save();
         $proceso->save();
-        
+
         return [
             "status" => 200,
             "message" => "Archivo Eliminado"
         ];
+
     }
     public function comprobanteDestroy($id) {
         $archivo = Archivo::find($id);
         $proceso = Proceso::find($id);
-        Storage::delete('/pdfs/comprobantes/' . $archivo->comprobante_donacion);
+
+        $ruta = public_path('pdfs/comprobantes/' . $archivo->comprobante_donacion);
+
+        if (file_exists($ruta)) {
+            unlink($ruta);
+        }
+
         $archivo->comprobante_donacion = null;
         $proceso->pago_donacion = 0;
+
         $archivo->save();
         $proceso->save();
 
@@ -187,15 +202,22 @@ class ArchivoController extends Controller
     public function imagenDestroy($id) {
         $archivo = Archivo::find($id);
         $proceso = Proceso::find($id);
-        Storage::delete('/imagenes/titulacion/' . $archivo->imagen_titulacion);
+
+        $ruta = public_path('imagenes/' . $archivo->imagen_titulacion);
+
+        if (file_exists($ruta)) {
+            unlink($ruta);
+        }
+
         $archivo->imagen_titulacion = null;
         $proceso->carga_imagen = 0;
+
         $archivo->save();
         $proceso->save();
 
         return [
             "status" => 200,
-            "message" => "Imágen Eliminada"
+            "message" => "Archivo Eliminado"
         ];
     }
 }
