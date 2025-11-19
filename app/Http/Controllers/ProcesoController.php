@@ -36,9 +36,24 @@ class ProcesoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Proceso $proceso)
+    public function updateEncuesta(Request $request)
     {
-        //
+        $proceso = Proceso::find($request->id);
+
+        if(!$proceso) {
+            return [
+                "status" => "error",
+                "message" => "El proceso no se encontró"
+            ];
+        }
+
+        $proceso->encuesta_egresados = 1;
+        $proceso->save();
+
+        return [
+            "status" => 200,
+            "message" => "Encuesta Realizada"
+        ];
     }
 
     /**

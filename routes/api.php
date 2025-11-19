@@ -7,6 +7,7 @@ use App\Http\Controllers\TsuController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArchivoController;
+use App\Http\Controllers\ProcesoController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\PasswordController;
 
@@ -27,7 +28,7 @@ Route::middleware("auth:sanctum")->group(function() {
     Route::post("/archivo/imagen/destroy/{id}", [ArchivoController::class, "imagenDestroy"]);
     Route::post("/archivo/comprobante/store", [ArchivoController::class, "comprobanteStore"]); 
     Route::post("/archivo/imagen/store", [ArchivoController::class, "imagenStore"]); 
-
+    Route::post("/proceso/encuesta/update", [ProcesoController::class, "updateEncuesta"]);
     
 });
 
