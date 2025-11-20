@@ -23,7 +23,7 @@ Route::middleware("auth:sanctum")->group(function() {
     Route::post("/change-password", [PasswordController::class, "update"]);
     Route::post("/archivo/referencia/store", [ArchivoController::class, "referenciaStore"]);
     Route::post("/archivo/memoria/store", [ArchivoController::class, "memoriaStore"]);
-    Route::post("/archivo/memoria/destroy/{id}", [ArchivoController::class, "memoriaDestroy"]);
+    Route::post("/arc hivo/memoria/destroy/{id}", [ArchivoController::class, "memoriaDestroy"]);
     Route::post("/archivo/comprobante/destroy/{id}", [ArchivoController::class, "comprobanteDestroy"]);
     Route::post("/archivo/imagen/destroy/{id}", [ArchivoController::class, "imagenDestroy"]);
     Route::post("/archivo/comprobante/store", [ArchivoController::class, "comprobanteStore"]); 

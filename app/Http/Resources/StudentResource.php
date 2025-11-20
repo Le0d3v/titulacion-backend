@@ -62,12 +62,11 @@ class StudentResource extends JsonResource
             ],
 
            "archivo" => [
-                "memoria_estadia" => Storage::url("pdfs/memorias/" . $this->archivo->memoria_estadia),
-                "imagen_titulacion" => Storage::url("imagenes/titulacion/" . $this->archivo->imagen_titulacion),
-                "comprobante_donacion" => Storage::url("pdfs/comprobantes/" . $this->archivo->comprobante_donacion),
+                "memoria_estadia" => $this->archivo->memoria_estadia,
+                "imagen_titulacion" => $this->archivo->imagen_titulacion,
+                "comprobante_donacion" => $this->archivo->comprobante_donacion,
                 "referencia_pago" => $this->archivo->referencia_pago,
             ]
-
         ];
     }
 }
