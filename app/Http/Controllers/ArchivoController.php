@@ -31,8 +31,6 @@ class ArchivoController extends Controller
 
         $proceso = Proceso::find($data["id"]);
         $archivo = Archivo::find($data["id"]);
-        $proceso = Proceso::find($data["id"]);
-        $archivo = Archivo::find($data["id"]);
         
         $archivo->referencia_pago = $data["referencia_pago"];
         $proceso->pago_titulo = 2;
@@ -55,13 +53,13 @@ class ArchivoController extends Controller
         $user = User::findOrFail($data["id"]);
 
         $nombreArchivo = "memoria_estadia_{$user->matricula}.pdf";
-        $rutaFisica = public_path("storage/pdfs/memorias");
+        $rutaFisica = public_path("storage/pdfs/memorias/");
 
         if (!file_exists($rutaFisica)) {
             mkdir($rutaFisica, 0775, true);
         }
 
-        $rutaArchivo = $rutaFisica . "/" . $nombreArchivo;
+        $rutaArchivo = $rutaFisica . $nombreArchivo;
 
         if (file_exists($rutaArchivo)) {
             unlink($rutaArchivo);
@@ -90,13 +88,13 @@ class ArchivoController extends Controller
         $user = User::findOrFail($data["id"]);
 
         $nombreArchivo = "comprobante_{$user->matricula}.pdf";
-        $rutaFisica = public_path("storage/pdfs/comprobantes");
+        $rutaFisica = public_path("storage/pdfs/comprobantes/");
 
         if (!file_exists($rutaFisica)) {
             mkdir($rutaFisica, 0775, true);
         }
 
-        $rutaArchivo = $rutaFisica . "/" . $nombreArchivo;
+        $rutaArchivo = $rutaFisica . $nombreArchivo;
 
         if (file_exists($rutaArchivo)) {
             unlink($rutaArchivo);
@@ -126,13 +124,13 @@ class ArchivoController extends Controller
         $extension = $request->file("imagen")->getClientOriginalExtension();
         $nombreArchivo = "imagen_{$user->matricula}.{$extension}";
 
-        $rutaFisica = public_path("storage/imagenes");
+        $rutaFisica = public_path("storage/imagenes/");
 
         if (!file_exists($rutaFisica)) {
             mkdir($rutaFisica, 0775, true);
         }
 
-        $rutaArchivo = $rutaFisica . "/" . $nombreArchivo;
+        $rutaArchivo = $rutaFisica . $nombreArchivo;
 
         if (file_exists($rutaArchivo)) {
             unlink($rutaArchivo);
@@ -142,8 +140,6 @@ class ArchivoController extends Controller
 
         $proceso->carga_imagen = 2;
         $archivo->imagen_titulacion = $nombreArchivo;
-
-        $a = 0;
 
         $proceso->save();
         $archivo->save();
@@ -159,65 +155,115 @@ class ArchivoController extends Controller
         $archivo = Archivo::find($id);
         $proceso = Proceso::find($id);
 
-        $ruta = public_path('storage/pdfs/memorias/' . $archivo->memoria_estadia);
-
-        if (file_exists($ruta)) {
-            unlink($ruta);
+        if (!$archivo || !$proceso) {
+            return [
+                "status" => 404,
+                "message" => "Archivo o Proceso no encontrado"
+            ];
         }
 
-        $archivo->memoria_estadia = null;
-        $proceso->validacion_memoria_estadia = 0;
+        $ruta = public_path('/storage/pdfs/memorias/' . $archivo->memoria_estadia);
 
-        $archivo->save();
-        $proceso->save();
+        if (file_exists($ruta)) {
+            if (unlink($ruta)) {
+                $archivo->memoria_estadia = null;
+                $proceso->validacion_memoria_estadia = 0;
 
-        return [
-            "status" => 200,
-            "message" => "Archivo Eliminado"
-        ];
+                $archivo->save();
+                $proceso->save();
 
+                return [
+                    "status" => 200,
+                    "message" => "Imágen Eliminada"
+                ];
+            } else {
+                return [
+                    "status" => 500,
+                    "message" => "Error al eliminar el archivo del sistema"
+                ];
+            }
+        } else {
+            return [
+                "status" => 404,
+                "message" => "Archivo no encontrado en el sistema de archivos"
+            ];
+        }
     }
     public function comprobanteDestroy($id) {
         $archivo = Archivo::find($id);
         $proceso = Proceso::find($id);
 
-        $ruta = public_path('storage/pdfs/comprobantes/' . $archivo->comprobante_donacion);
-
-        if (file_exists($ruta)) {
-            unlink($ruta);
+        if (!$archivo || !$proceso) {
+            return [
+                "status" => 404,
+                "message" => "Archivo o Proceso no encontrado"
+            ];
         }
 
-        $archivo->comprobante_donacion = null;
-        $proceso->pago_donacion = 0;
+        $ruta = public_path('/storage/pdfs/comprobantes/' . $archivo->comprobante_donacion);
 
-        $archivo->save();
-        $proceso->save();
+        if (file_exists($ruta)) {
+            if (unlink($ruta)) {
+                $archivo->comprobante_donacion = null;
+                $proceso->pago_donacion = 0;
 
-        return [
-            "status" => 200,
-            "message" => "Archivo Eliminado"
-        ];
+                $archivo->save();
+                $proceso->save();
+
+                return [
+                    "status" => 200,
+                    "message" => "Archivo Eliminado"
+                ];
+            } else {
+                return [
+                    "status" => 500,
+                    "message" => "Error al eliminar el archivo del sistema"
+                ];
+            }
+        } else {
+            return [
+                "status" => 404,
+                "message" => "Archivo no encontrado en el sistema de archivos"
+            ];
+        }
     }
 
     public function imagenDestroy($id) {
         $archivo = Archivo::find($id);
         $proceso = Proceso::find($id);
 
-        $ruta = public_path('storage/imagenes/' . $archivo->imagen_titulacion);
-
-        if (file_exists($ruta)) {
-            unlink($ruta);
+        if (!$archivo || !$proceso) {
+            return [
+                "status" => 404,
+                "message" => "Archivo o Proceso no encontrado"
+            ];
         }
 
-        $archivo->imagen_titulacion = null;
-        $proceso->carga_imagen = 0;
+        $ruta = public_path('/storage/imagenes/' . $archivo->imagen_titulacion);
 
-        $archivo->save();
-        $proceso->save();
+        if (file_exists($ruta)) {
+            if (unlink($ruta)) {
+                $archivo->imagen_titulacion = null;
+                $proceso->carga_imagen = 0;
 
-        return [
-            "status" => 200,
-            "message" => "Archivo Eliminado"
-        ];
+                $archivo->save();
+                $proceso->save();
+
+                return [
+                    "status" => 200,
+                    "message" => "Archivo Eliminado"
+                ];
+            } else {
+                return [
+                    "status" => 500,
+                    "message" => "Error al eliminar el archivo del sistema"
+                ];
+            }
+        } else {
+            return [
+                "status" => 404,
+                "message" => "Archivo no encontrado en el sistema de archivos"
+            ];
+        }
     }
 }

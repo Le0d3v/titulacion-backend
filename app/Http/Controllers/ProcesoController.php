@@ -114,7 +114,7 @@ class ProcesoController extends Controller
             ];
         }
 
-        $proceso->carga_imagen = 3;
+        $proceso->pago_donacion = 3;
         $proceso->save();
 
         return [
