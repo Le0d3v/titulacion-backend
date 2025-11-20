@@ -10,30 +10,6 @@ use Illuminate\Http\Request;
 class ProcesoController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Proceso $proceso)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function updateEncuesta(Request $request)
@@ -56,11 +32,185 @@ class ProcesoController extends Controller
         ];
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Proceso $proceso)
-    {
-        //
+    public function aprobarEncuesta(Request $request) {
+        $request->validate([
+            "id" => "required|numeric"
+        ]);
+
+        $proceso = Proceso::find($request->id);
+
+        if(!$proceso) {
+            return [
+                "status" => 404,
+                "message" => "No se encontró el proceso"
+            ];
+        }
+
+        $proceso->validacion_memoria_estadia = 1;
+        $proceso->save();
+
+        return [
+            "status" => 200,
+            "message" => "Proceso Aceptado"
+        ];
+    }
+    
+    public function rechazarEncuesta(Request $request) {
+        $request->validate([
+            "id" => "required|numeric"
+        ]);
+
+        $proceso = Proceso::find($request->id);
+
+        if(!$proceso) {
+            return [
+                "status" => 404,
+                "message" => "No se encontró el proceso"
+            ];
+        }
+
+        $proceso->validacion_memoria_estadia = 3;
+        $proceso->save();
+
+        return [
+            "status" => 200,
+            "message" => "Proceso Rechazado"
+        ];
+    }
+    public function aprobarComprobante(Request $request) {
+        $request->validate([
+            "id" => "required|numeric"
+        ]);
+
+        $proceso = Proceso::find($request->id);
+
+        if(!$proceso) {
+            return [
+                "status" => 404,
+                "message" => "No se encontró el proceso"
+            ];
+        }
+
+        $proceso->pago_donacion = 1;
+        $proceso->save();
+
+        return [
+            "status" => 200,
+            "message" => "Proceso Aceptado"
+        ];
+    }
+
+    public function rechazarComprobante(Request $request) {
+        $request->validate([
+            "id" => "required|numeric"
+        ]);
+
+        $proceso = Proceso::find($request->id);
+
+        if(!$proceso) {
+            return [
+                "status" => 404,
+                "message" => "No se encontró el proceso"
+            ];
+        }
+
+        $proceso->carga_imagen = 3;
+        $proceso->save();
+
+        return [
+            "status" => 200,
+            "message" => "Proceso Rechazado"
+        ];
+    }
+    public function aprobarImagen(Request $request) {
+        $request->validate([
+            "id" => "required|numeric"
+        ]);
+
+        $proceso = Proceso::find($request->id);
+
+        if(!$proceso) {
+            return [
+                "status" => 404,
+                "message" => "No se encontró el proceso"
+            ];
+        }
+
+        $proceso->carga_imagen = 1;
+        $proceso->save();
+
+        return [
+            "status" => 200,
+            "message" => "Imágen Aprobada"
+        ];
+    }
+
+    public function rechazarReferencia(Request $request) {
+        $request->validate([
+            "id" => "required|numeric"
+        ]);
+
+        $proceso = Proceso::find($request->id);
+
+        if(!$proceso) {
+            return [
+                "status" => 404,
+                "message" => "No se encontró el proceso"
+            ];
+        }
+
+        $proceso->pago_titulo = 3;
+        $proceso->save();
+
+        return [
+            "status" => 200,
+            "message" => "Referencia Rechazada"
+        ];
+    }
+    
+    public function aprobarReferencia(Request $request) {
+        $request->validate([
+            "id" => "required|numeric"
+        ]);
+
+        $proceso = Proceso::find($request->id);
+
+        if(!$proceso) {
+            return [
+                "status" => 404,
+                "message" => "No se encontró el proceso"
+            ];
+        }
+
+        $proceso->pago_titulo = 1;
+        $proceso->save();
+
+        return [
+            "status" => 200,
+            "message" => "Referencia Aprobada"
+        ];
+    }
+
+    public function rechazarImagen(Request $request) {
+        $request->validate([
+            "id" => "required|numeric"
+        ]);
+
+        $proceso = Proceso::find($request->id);
+
+        if(!$proceso) {
+            return [
+                "status" => 404,
+                "message" => "No se encontró el proceso"
+            ];
+        }
+
+        $proceso->carga_imagen = 3;
+        $proceso->save();
+
+        return [
+            "status" => 200,
+            "message" => "Imágen Rechazada"
+        ];
     }
 }

@@ -17,19 +17,26 @@ Route::middleware("auth:sanctum")->group(function() {
         return $request->user();
     });
 
-
     // Procesos para el usuario
     Route::post("/logout", [AuthController::class, "logout"]);
     Route::post("/change-password", [PasswordController::class, "update"]);
     Route::post("/archivo/referencia/store", [ArchivoController::class, "referenciaStore"]);
     Route::post("/archivo/memoria/store", [ArchivoController::class, "memoriaStore"]);
-    Route::post("/arc hivo/memoria/destroy/{id}", [ArchivoController::class, "memoriaDestroy"]);
+    Route::post("/archivo/memoria/destroy/{id}", [ArchivoController::class, "memoriaDestroy"]);
     Route::post("/archivo/comprobante/destroy/{id}", [ArchivoController::class, "comprobanteDestroy"]);
     Route::post("/archivo/imagen/destroy/{id}", [ArchivoController::class, "imagenDestroy"]);
     Route::post("/archivo/comprobante/store", [ArchivoController::class, "comprobanteStore"]); 
-    Route::post("/archivo/imagen/store", [ArchivoController::class, "imagenStore"]); 
+    Route::post("/archivo/imagen/store", [ArchivoController::class, "imagenStore"]);
+
     Route::post("/proceso/encuesta/update", [ProcesoController::class, "updateEncuesta"]);
-    
+    Route::post("/proceso/memoria/aprobar", [ProcesoController::class, "aprobarEncuesta"]);
+    Route::post("/proceso/memoria/rechazar", [ProcesoController::class, "rechazarEncuesta"]);
+    Route::post("/proceso/comprobante/aprobar", [ProcesoController::class, "aprobarComprobante"]);
+    Route::post("/proceso/comprobante/rechazar", [ProcesoController::class, "rechazarComprobante"]);
+    Route::post("/proceso/imagen/aprobar", [ProcesoController::class, "aprobarImagen"]);
+    Route::post("/proceso/imagen/rechazar", [ProcesoController::class, "rechazarImagen"]);
+    Route::post("/proceso/referencia/aprobar", [ProcesoController::class, "aprobarReferencia"]);
+    Route::post("/proceso/referencia/rechazar", [ProcesoController::class, "rechazarReferencia"]);
 });
 
 Route::apiResource("/students/tsu", TsuController::class);
