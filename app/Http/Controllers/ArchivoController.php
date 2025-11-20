@@ -124,7 +124,7 @@ class ArchivoController extends Controller
         $extension = $request->file("imagen")->getClientOriginalExtension();
         $nombreArchivo = "imagen_{$user->matricula}.{$extension}";
 
-        $rutaFisica = public_path("storage/imagenes/");
+        $rutaFisica = public_path("/storage/imagenes/");
 
         if (!file_exists($rutaFisica)) {
             mkdir($rutaFisica, 0775, true);
