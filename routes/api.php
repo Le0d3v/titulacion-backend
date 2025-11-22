@@ -29,8 +29,8 @@ Route::middleware("auth:sanctum")->group(function() {
     Route::post("/archivo/imagen/store", [ArchivoController::class, "imagenStore"]);
 
     Route::post("/proceso/encuesta/update", [ProcesoController::class, "updateEncuesta"]);
-    Route::post("/proceso/memoria/aprobar", [ProcesoController::class, "aprobarEncuesta"]);
-    Route::post("/proceso/memoria/rechazar", [ProcesoController::class, "rechazarEncuesta"]);
+    Route::post("/proceso/memoria/aprobar", [ProcesoController::class, "aprobarMemoria"]);
+    Route::post("/proceso/memoria/rechazar", [ProcesoController::class, "rechazarMemoria"]);
     Route::post("/proceso/comprobante/aprobar", [ProcesoController::class, "aprobarComprobante"]);
     Route::post("/proceso/comprobante/rechazar", [ProcesoController::class, "rechazarComprobante"]);
     Route::post("/proceso/imagen/aprobar", [ProcesoController::class, "aprobarImagen"]);

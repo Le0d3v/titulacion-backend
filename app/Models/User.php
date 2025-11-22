@@ -62,4 +62,20 @@ class User extends Authenticatable
     public function archivo() {
         return $this->belongsTo(Archivo::class);
     }
+
+    public function comentarios() {
+        return $this->hasManyThrough(
+            ComentariosProceso::class, 
+            Proceso::class,
+            "id",
+            "proceso_id",
+            "proceso_id", 
+            "id"
+            )
+        ;
+    }
+
+    public function comentarioProceso($proceso) {
+        return $this->comentarios()->where("subproceso", $proceso)->get();
+    }
 }

@@ -11,6 +11,7 @@ use App\Http\Requests\PDFRequest;
 use App\Http\Requests\ImagenRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ReferenciaRequest;
+use App\Models\ComentariosProceso;
 
 class ArchivoController extends Controller
 {
@@ -45,14 +46,13 @@ class ArchivoController extends Controller
     }
     
     public function memoriaStore(PDFRequest $request) {
-
         $data = $request->validated();
 
         $proceso = Proceso::findOrFail($data["id"]);
         $archivo = Archivo::findOrFail($data["id"]);
-        $user = User::findOrFail($data["id"]);
+        $usuario = User::findOrFail($data["id"]);
 
-        $nombreArchivo = "memoria_estadia_{$user->matricula}.pdf";
+        $nombreArchivo = $request->file("pdf")->getClientOriginalName();
         $rutaFisica = public_path("storage/pdfs/memorias/");
 
         if (!file_exists($rutaFisica)) {
@@ -66,12 +66,33 @@ class ArchivoController extends Controller
         }
 
         $request->file("pdf")->move($rutaFisica, $nombreArchivo);
-
-        $proceso->validacion_memoria_estadia = 2;
         $archivo->memoria_estadia = $nombreArchivo;
-
-        $proceso->save();
         $archivo->save();
+        
+        if($nombreArchivo != "Memoria_Estadia_$usuario->matricula.pdf") {
+            $proceso->validacion_memoria_estadia = 3;
+            $proceso->save();
+
+            $comentario = ComentariosProceso::create([
+                "proceso_id" => $proceso->id,
+                "subproceso" => "memoria",
+                "comentario" => "El PDF no tiene el nombre solicitado, por favor modifícalo."
+            ]);
+
+            return [
+                "status" => 200,
+                "message" => "Archivo registrado correctamente"
+            ];
+        } 
+
+        $proceso->validacion_memoria_estadia = 1;
+        $proceso->save();
+
+        $comentario = ComentariosProceso::create([
+            "proceso_id" => $proceso->id,
+            "subproceso" => "memoria",
+            "comentario" => "Archivo validado y aceptado."
+        ]);
 
         return [
             "status" => 200,
@@ -81,13 +102,13 @@ class ArchivoController extends Controller
     }
 
     public function comprobanteStore(PDFRequest $request) {
-       $data = $request->validated();
+        $data = $request->validated();
 
         $proceso = Proceso::findOrFail($data["id"]);
         $archivo = Archivo::findOrFail($data["id"]);
-        $user = User::findOrFail($data["id"]);
+        $usuario = User::findOrFail($data["id"]);
 
-        $nombreArchivo = "comprobante_{$user->matricula}.pdf";
+        $nombreArchivo = $request->file("pdf")->getClientOriginalName();
         $rutaFisica = public_path("storage/pdfs/comprobantes/");
 
         if (!file_exists($rutaFisica)) {
@@ -101,12 +122,33 @@ class ArchivoController extends Controller
         }
 
         $request->file("pdf")->move($rutaFisica, $nombreArchivo);
-
-        $proceso->pago_donacion = 2;
         $archivo->comprobante_donacion = $nombreArchivo;
-
-        $proceso->save();
         $archivo->save();
+        
+        if($nombreArchivo != "Comprobante_Donacion_$usuario->matricula.pdf") {
+            $proceso->pago_donacion = 3;
+            $proceso->save();
+
+            $comentario = ComentariosProceso::create([
+                "proceso_id" => $proceso->id,
+                "subproceso" => "comprobante",
+                "comentario" => "El PDF no tiene el nombre solicitado, por favor modificalo."
+            ]);
+
+            return [
+                "status" => 200,
+                "message" => "Archivo registrado correctamente"
+            ];
+        } 
+
+        $proceso->pago_donacion = 1;
+        $proceso->save();
+
+        $comentario = ComentariosProceso::create([
+            "proceso_id" => $proceso->id,
+            "subproceso" => "comprobante",
+            "comentario" => "Archivo validado y aceptado."
+        ]);
 
         return [
             "status" => 200,

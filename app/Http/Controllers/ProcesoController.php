@@ -51,7 +51,7 @@ class ProcesoController extends Controller
         ];
     }
 
-    public function aprobarEncuesta(Request $request) {
+    public function aprobarMemoria(Request $request) {
         $request->validate([
             "id" => "required|numeric"
         ]);
@@ -76,7 +76,7 @@ class ProcesoController extends Controller
         ];
     }
     
-    public function rechazarEncuesta(Request $request) {
+    public function rechazarMemoria(Request $request) {
         $request->validate([
             "id" => "required|numeric"
         ]);
