@@ -28,6 +28,7 @@ Route::middleware("auth:sanctum")->group(function() {
     Route::post("/archivo/comprobante/store", [ArchivoController::class, "comprobanteStore"]); 
     Route::post("/archivo/imagen/store", [ArchivoController::class, "imagenStore"]);
 
+    // Procesos para el Administrador
     Route::post("/proceso/encuesta/update", [ProcesoController::class, "updateEncuesta"]);
     Route::post("/proceso/memoria/aprobar", [ProcesoController::class, "aprobarMemoria"]);
     Route::post("/proceso/memoria/rechazar", [ProcesoController::class, "rechazarMemoria"]);

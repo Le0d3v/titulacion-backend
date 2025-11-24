@@ -216,7 +216,7 @@ class ArchivoController extends Controller
 
                 return [
                     "status" => 200,
-                    "message" => "Imágen Eliminada"
+                    "message" => "Archivo Eliminado"
                 ];
             } else {
                 return [
@@ -293,7 +293,7 @@ class ArchivoController extends Controller
 
                 return [
                     "status" => 200,
-                    "message" => "Archivo Eliminado"
+                    "message" => "Imágen Eliminada"
                 ];
             } else {
                 return [
