@@ -7,6 +7,7 @@ use App\Http\Controllers\TsuController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArchivoController;
+use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\ProcesoController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\PasswordController;
@@ -38,6 +39,8 @@ Route::middleware("auth:sanctum")->group(function() {
     Route::post("/proceso/imagen/rechazar", [ProcesoController::class, "rechazarImagen"]);
     Route::post("/proceso/referencia/aprobar", [ProcesoController::class, "aprobarReferencia"]);
     Route::post("/proceso/referencia/rechazar", [ProcesoController::class, "rechazarReferencia"]);
+
+    Route::post("/comentario/store", [ComentarioController::class, "store"]);
 });
 
 Route::apiResource("/students/tsu", TsuController::class);

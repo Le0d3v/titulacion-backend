@@ -72,7 +72,7 @@ class StudentResource extends JsonResource
             "comentarios_memoria" => $this->comentarioProceso("memoria"),
             "comentarios_comprobante" => $this->comentarioProceso("comprobante"),
             "comentarios_imagen" => $this->comentarioProceso("imagen"),
-            "comentarios_referencia" => $this->comentarioProceso("titulo"),
+            "comentarios_referencia" => $this->comentarioProceso("referencia"),
            ]
         ];
     }
