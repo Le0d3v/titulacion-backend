@@ -209,7 +209,9 @@ class ArchivoController extends Controller
         if (file_exists($ruta)) {
             if (unlink($ruta)) {
                 $archivo->memoria_estadia = null;
+
                 $proceso->validacion_memoria_estadia = 0;
+                $proceso->validarCompletado();
 
                 $archivo->save();
                 $proceso->save();
@@ -247,7 +249,9 @@ class ArchivoController extends Controller
         if (file_exists($ruta)) {
             if (unlink($ruta)) {
                 $archivo->comprobante_donacion = null;
+
                 $proceso->pago_donacion = 0;
+                $proceso->validarCompletado();
 
                 $archivo->save();
                 $proceso->save();
@@ -287,6 +291,7 @@ class ArchivoController extends Controller
             if (unlink($ruta)) {
                 $archivo->imagen_titulacion = null;
                 $proceso->carga_imagen = 0;
+                $proceso->validarCompletado();
 
                 $archivo->save();
                 $proceso->save();

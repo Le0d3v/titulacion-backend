@@ -9,22 +9,7 @@ use Illuminate\Http\Request;
 
 class ProcesoController extends Controller
 {
-    public function validarCompletado(Proceso $proceso){
-        if(
-            $proceso->validacion_memoria_estadia == 1 &&
-            $proceso->validacion_datos_personales == 1 &&
-            $proceso->encuesta_egresados == 1 &&
-            $proceso->carga_imagen == 1 &&
-            $proceso->pago_donacion == 1 &&
-            $proceso->pago_titulo == 1 
-        ) {
-            $proceso->completado = 1;
-            $proceso->save();
-        } else {
-            $proceso->completado = 0;
-            $proceso->save();
-        }
-    }
+
 
     /**
      * Update the specified resource in storage.
@@ -43,7 +28,7 @@ class ProcesoController extends Controller
         $proceso->encuesta_egresados = 1;
         $proceso->save();
 
-        $this->validarCompletado($proceso);
+        $proceso->validarCompletado();
 
         return [
             "status" => 200,
@@ -68,7 +53,7 @@ class ProcesoController extends Controller
         $proceso->validacion_memoria_estadia = 1;
         $proceso->save();
 
-        $this->validarCompletado($proceso);
+        $proceso->validarCompletado();
 
         return [
             "status" => 200,
@@ -93,7 +78,7 @@ class ProcesoController extends Controller
         $proceso->validacion_memoria_estadia = 3;
         $proceso->save();
 
-        $this->validarCompletado($proceso);
+        $proceso->validarCompletado();
 
         return [
             "status" => 200,
@@ -117,7 +102,7 @@ class ProcesoController extends Controller
         $proceso->pago_donacion = 1;
         $proceso->save();
 
-        $this->validarCompletado($proceso);
+        $proceso->validarCompletado();
 
         return [
             "status" => 200,
@@ -142,7 +127,7 @@ class ProcesoController extends Controller
         $proceso->pago_donacion = 3;
         $proceso->save();
 
-        $this->validarCompletado($proceso);
+        $proceso->validarCompletado();
 
         return [
             "status" => 200,
@@ -166,7 +151,7 @@ class ProcesoController extends Controller
         $proceso->carga_imagen = 1;
         $proceso->save();
 
-        $this->validarCompletado($proceso);
+        $proceso->validarCompletado();
 
         return [
             "status" => 200,
@@ -191,7 +176,7 @@ class ProcesoController extends Controller
         $proceso->pago_titulo = 3;
         $proceso->save();
 
-        $this->validarCompletado($proceso);
+        $proceso->validarCompletado();
 
         return [
             "status" => 200,
@@ -216,7 +201,7 @@ class ProcesoController extends Controller
         $proceso->pago_titulo = 1;
         $proceso->save();
 
-        $this->validarCompletado($proceso);
+        $proceso->validarCompletado();
 
         return [
             "status" => 200,
@@ -241,7 +226,7 @@ class ProcesoController extends Controller
         $proceso->carga_imagen = 3;
         $proceso->save();
 
-        $this->validarCompletado($proceso);
+        $proceso->validarCompletado();
 
         return [
             "status" => 200,
